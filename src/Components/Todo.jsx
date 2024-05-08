@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function Todo (props) {
 
@@ -9,7 +10,10 @@ export default function Todo (props) {
     const editClickHandler = (id) => {
         props.onEdit(id)
     }
-
+    
+    const textEditHandler =(id)=>{
+        props.onTitel(id)
+    }
         return (
             // 'completed' class for completed todos
             <div className={`todo ${props.completed ? 'completed' : ''}`} style={{ display: 'flex' }}>
@@ -22,6 +26,7 @@ export default function Todo (props) {
                 <button className="trash-btn" onClick={() => removeClickHandler(props.id)}>
                     <i className="fas fa-trash" aria-hidden="true"></i>
                 </button>
+                <button onClick={()=>textEditHandler(props.id)}>edit text</button>
             </div>
         )
     }

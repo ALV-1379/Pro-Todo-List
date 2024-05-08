@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Header from './Header'
 import Todo from './Todo'
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function TodoList() {
 
@@ -16,18 +19,18 @@ export default function TodoList() {
 
     const addTodo = (event) => {
         event.preventDefault()
-        if(todoTitle.length >0){
+        if (todoTitle.length > 0) {
             let newTodoObject = {
                 id: todos.length + 1,
                 title: todoTitle,
                 completed: false
             }
-    
+
             setTodos(prevState => {
                 return [...prevState, newTodoObject]
             })
             setTodoTitle('')
-        }else{
+        } else {
             alert("input is empty")
         }
     }
@@ -54,9 +57,22 @@ export default function TodoList() {
         setTodos(newTodos)
 
     }
+    
+    const editTitel = (todoId)=>{
+        let editselected = todos.filter(todo =>{
+            return todo.id === todoId
+        })
+        const editval = editselected[0]
+        const edittext = editval.title
+        setTodoTitle(edittext)
+      //  const editItem = editval.id
+    }
 
     const statusHandler = (event) => {
         setStatus(event.target.value)
+    }
+    const clearHandler = () => {
+        setTodos([])
     }
 
     return (
@@ -65,7 +81,7 @@ export default function TodoList() {
             <form onSubmit={addTodo}>
                 <input type="text" className="todo-input" maxLength="40" value={todoTitle} onChange={todoTitleHandler} />
                 <button className="todo-button" type="submit">
-                    <i className="fas fa-plus-square"></i>
+                    <AddIcon/>
                 </button>
                 <div className="select">
                     <select name="todos" className="filter-todo" onChange={statusHandler}>
@@ -81,27 +97,35 @@ export default function TodoList() {
 
                     {
                         status === 'completed' && todos.filter(todo => todo.completed).map(todo => (
-                            <Todo key={todo.id} {...todo} onRemove={removeTodo} onEdit={editTodo} />
+                            <Todo key={todo.id} {...todo} onTitel={editTitel} onRemove={removeTodo} onEdit={editTodo} />
 
                         ))
                     }
 
                     {
                         status === 'uncompleted' && todos.filter(todo => !todo.completed).map(todo => (
-                            <Todo key={todo.id} {...todo} onRemove={removeTodo} onEdit={editTodo} />
+                            <Todo key={todo.id} {...todo} onTitel={editTitel} onRemove={removeTodo} onEdit={editTodo} />
 
                         ))
                     }
 
                     {
                         status === "all" && todos.map(todo => (
-                            <Todo key={todo.id} {...todo} onRemove={removeTodo} onEdit={editTodo} />
+                            <Todo key={todo.id} {...todo} onTitel={editTitel} onRemove={removeTodo} onEdit={editTodo} />
                         ))
                     }
 
 
                 </ul>
             </div>
+            <div style={{
+                display: "flex",
+                justifyContent: "center"}}>
+            <Button onClick={clearHandler} variant="outlined" startIcon={<DeleteIcon />}>
+                Delete
+            </Button>
+        </div >
+           
         </>
     )
 }

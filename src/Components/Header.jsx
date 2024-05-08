@@ -7,5 +7,4 @@ export default function Header() {
             <h1>Pro Todo List</h1>
         </header>
 
-    )
-}
+    )}

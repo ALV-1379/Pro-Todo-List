@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import Header from './Header'
 import Todo from './Todo'
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 export default function TodoList() {
 

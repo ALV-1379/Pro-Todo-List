@@ -12,6 +12,8 @@ export default function TodoList() {
     const [todos, setTodos] = useState([])
     const [todoTitle, setTodoTitle] = useState("")
     const [status, setStatus] = useState("all")
+    const [taskId , settaskId] = useState(0)
+    const [isEdit , setisEdit]= useState(false)
 
 
     const todoTitleHandler = (event) => {
@@ -19,22 +21,29 @@ export default function TodoList() {
     }
 
     const addTodo = (event) => {
-        event.preventDefault()
-        if (todoTitle.length > 0) {
-            let newTodoObject = {
-                id: todos.length + 1,
-                title: todoTitle,
-                completed: false
+        if(!isEdit){
+            event.preventDefault()
+            if (todoTitle.length > 0) {
+                let newTodoObject = {
+                    id: todos.length ,
+                    title: todoTitle,
+                    completed: false
+                }
+    
+                setTodos(prevState => {
+                    return [...prevState, newTodoObject]
+                })
+                setTodoTitle('')
+            } else {
+                alert("input is empty")
             }
-
-            setTodos(prevState => {
-                return [...prevState, newTodoObject]
-            })
-            setTodoTitle('')
-        } else {
-            alert("input is empty")
+        }else{
+            event.preventDefault()
+            todos[taskId].title = todoTitle;
+            setisEdit(false)
         }
-    }
+        }
+        
 
     const removeTodo = (todoId) => {
 
@@ -65,8 +74,9 @@ export default function TodoList() {
         })
         const editval = editselected[0]
         const edittext = editval.title
-        setTodoTitle(edittext)
-      //  const editItem = editval.id
+        setTodoTitle(edittext) 
+        setisEdit(true)
+        settaskId(editval.id)
     }
 
     const statusHandler = (event) => {

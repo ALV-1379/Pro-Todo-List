@@ -12,11 +12,11 @@ export default function Todo(props) {
     }
 
     const editClickHandler = (id) => {
-        props.onEdit(id)
+        props.onToggleCompletion(id)
     }
 
     const textEditHandler = (id) => {
-        props.onTitel(id)
+        props.onTitleEdit(id)
     }
     return (
         <div className={`todo ${props.completed ? 'completed' : ''}`} style={{ display: 'flex' }}>
